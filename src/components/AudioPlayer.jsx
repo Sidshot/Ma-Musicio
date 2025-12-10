@@ -46,7 +46,7 @@ const AudioPlayer = () => {
 
     return (
         <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2 glass-card p-2 rounded-full shadow-2xl border-white/20">
-            <audio ref={audioRef} src="/background-music.flac" loop />
+            <audio ref={audioRef} src="./background-music.flac" loop />
 
             <button
                 onClick={togglePlay}

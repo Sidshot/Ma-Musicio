@@ -27,7 +27,8 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const stats = await parseCSV('/lastfmstats-IndoCurry.csv');
+                // Use relative path for GitHub Pages compatibility
+                const stats = await parseCSV('./lastfmstats-IndoCurry.csv');
                 setData(stats);
                 setLoading(false);
             } catch (err) {
