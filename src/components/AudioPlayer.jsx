@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Volume2, VolumeX, Play, Pause, X } from 'lucide-react';
+import { Volume2, VolumeX, Play, Pause } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const AudioPlayer = () => {
@@ -29,25 +29,30 @@ const AudioPlayer = () => {
 
         // Auto-dismiss warning after 5 seconds
         const timer = setTimeout(() => {
-            setShowWarning(false);
+            if (showWarning) setShowWarning(false);
         }, 5000);
 
         return () => clearTimeout(timer);
     }, []);
 
     const handleYes = () => {
-        // User says "Yes" -> Logic: "Keep music on" (As requested)
+        // User says "Yes" to "want me to play something for you?" -> YES = PLAY
         setShowWarning(false);
         if (audioRef.current) {
-            audioRef.current.muted = false; // Unmute if it was muted
+            audioRef.current.muted = false;
+            audioRef.current.volume = 1.0;
             setIsMuted(false);
-            audioRef.current.play();
-            setIsPlaying(true);
+
+            const playPromise = audioRef.current.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => setIsPlaying(true))
+                    .catch(e => console.error("Play failed:", e));
+            }
         }
     };
 
     const handleNo = () => {
-        // User says "No" -> Logic: "Turn off" (As requested)
+        // User says "No" to "want me to play something for you?" -> NO = STOP/PAUSE
         setShowWarning(false);
         if (audioRef.current) {
             audioRef.current.pause();
@@ -96,27 +101,27 @@ const AudioPlayer = () => {
                 </button>
             </div>
 
-            {/* Warning Dialog */}
+            {/* Warning Dialog - Centered and Bigger */}
             <AnimatePresence>
                 {showWarning && (
-                    <div className="fixed inset-0 z-[100] flex items-end justify-center pb-24 pointer-events-none">
+                    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm pointer-events-none">
                         <motion.div
-                            initial={{ y: 50, opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            exit={{ y: 20, opacity: 0 }}
-                            className="glass-card p-6 bg-[#1c1c1e]/90 pointer-events-auto flex flex-col items-center gap-4 border border-ios-blue/30 shadow-2xl max-w-sm mx-4"
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            className="glass-card p-10 bg-[#1c1c1e]/95 pointer-events-auto flex flex-col items-center gap-6 border border-ios-blue/30 shadow-2xl w-full max-w-lg"
                         >
-                            <p className="text-white font-medium text-center text-lg">Want me to turn off the song?</p>
+                            <h3 className="text-2xl font-bold text-white text-center">want me to play something for you</h3>
                             <div className="flex gap-4 w-full">
                                 <button
-                                    onClick={handleYes} // Yes -> Keep On
-                                    className="flex-1 py-3 bg-ios-blue text-white font-bold rounded-xl active:scale-95 transition-transform"
+                                    onClick={handleYes} // Yes -> Play
+                                    className="flex-1 py-4 bg-ios-blue text-white font-bold text-lg rounded-2xl active:scale-95 transition-transform shadow-lg shadow-ios-blue/20"
                                 >
                                     Yes
                                 </button>
                                 <button
-                                    onClick={handleNo} // No -> Turn Off
-                                    className="flex-1 py-3 bg-white/10 text-white font-medium rounded-xl hover:bg-white/20 active:scale-95 transition-all"
+                                    onClick={handleNo} // No -> Stop
+                                    className="flex-1 py-4 bg-white/10 text-white font-medium text-lg rounded-2xl hover:bg-white/20 active:scale-95 transition-all"
                                 >
                                     No
                                 </button>

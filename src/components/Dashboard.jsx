@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Music, Disc, Calendar, Zap, TrendingUp, Search } from 'lucide-react';
+import { Music, Disc, Zap, TrendingUp } from 'lucide-react';
 import StatsCard from './StatsCard';
 import ListeningClock from './Charts/ListeningClock';
 import YearlyStats from './Charts/YearlyStats';
@@ -9,7 +9,7 @@ import SearchBar from './SearchBar';
 import ArtistDetailsModal from './Modals/ArtistDetailsModal';
 import AudioPlayer from './AudioPlayer';
 import ThemeToggle from './ThemeToggle';
-import { InfoModal, ListModal } from './Modals/GenericModals'; // Import new modals
+import { InfoModal, ListModal } from './Modals/GenericModals';
 import { useData } from '../context/DataContext';
 
 import { parseCSV, getStatsSummary, getTopArtists } from '../utils/dataProcessor';
@@ -175,8 +175,16 @@ const Dashboard = () => {
             </div>
 
             {/* Footer */}
-            <footer className="text-center text-gray-500 text-sm py-8">
-                Generated for <span className="text-white font-bold">IndoCurry</span> using Local Data processing.
+            <footer className="text-center text-gray-500 text-sm py-8 flex flex-col items-center gap-2">
+                <p>Made by <span className="text-white font-bold">Indocurry</span></p>
+                <a
+                    href="https://www.instagram.com/bored__sid?igsh=MWoyNzVjMXhmb3g5eQ=="
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-ios-blue hover:text-white transition-colors border-b border-transparent hover:border-white"
+                >
+                    Drop me a message
+                </a>
             </footer>
         </div>
     );
