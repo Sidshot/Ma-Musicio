@@ -175,8 +175,9 @@ const Dashboard = () => {
             </div>
 
             {/* Footer */}
-            <footer className="text-center text-gray-500 text-sm py-8 flex flex-col items-center gap-2">
+            <footer className="text-center text-gray-500 text-sm py-8 flex flex-col items-center gap-4">
                 <p>Made by <span className="text-white font-bold">Indocurry</span></p>
+
                 <a
                     href="https://www.instagram.com/bored__sid?igsh=MWoyNzVjMXhmb3g5eQ=="
                     target="_blank"
@@ -185,6 +186,14 @@ const Dashboard = () => {
                 >
                     Drop me a message
                 </a>
+
+                {/* Visitor Counter Badge */}
+                <div className="mt-2 opacity-50 hover:opacity-100 transition-opacity">
+                    <img
+                        src="https://visitor-badge.laobi.icu/badge?page_id=Sidshot.Ma-Musicio&right_color=%230A84FF&left_text=Visitors"
+                        alt="Visitor Count"
+                    />
+                </div>
             </footer>
         </div>
     );
