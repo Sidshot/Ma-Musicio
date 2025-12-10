@@ -1,0 +1,130 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ios-bg: #000000;
+  --color-ios-card: rgba(28, 28, 30, 0.6);
+  --color-ios-card-hover: rgba(44, 44, 46, 0.8);
+  --color-ios-border: rgba(255, 255, 255, 0.1);
+  --color-ios-blue: #0A84FF;
+  --color-ios-green: #30D158;
+  --color-ios-indigo: #5E5CE6;
+  --color-ios-orange: #FF9F0A;
+  --color-ios-pink: #FF375F;
+  --color-ios-purple: #BF5AF2;
+  --color-ios-red: #FF453A;
+  --color-ios-teal: #64D2FF;
+  --color-ios-yellow: #FFD60A;
+
+  --animate-spring-up: springUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --animate-pulse-slow: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  @keyframes springUp {
+    0% {
+      transform: translateY(20px) scale(0.95);
+      opacity: 0;
+    }
+
+    100% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+  }
+}
+
+/* iOS Glass Utilities */
+@utility glass-card {
+  background-color: var(--color-ios-card);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+  border: 1px solid var(--color-ios-border);
+  border-radius: 1.5rem;
+  /* rounded-3xl */
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+@utility glass-card-hover {
+  &:hover {
+    background-color: var(--color-ios-card-hover);
+    transform: translateY(-2px) scale(1.01);
+    box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.4);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+}
+
+/* Typography */
+body {
+  @apply bg-black text-white font-sans antialiased overflow-x-hidden selection:bg-ios-blue selection:text-white;
+  /* Deep, rich animated background */
+  background: radial-gradient(circle at 50% 0%, #1a1a1a 0%, #000000 100%);
+  min-height: 100vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  letter-spacing: -0.02em;
+  /* Tight iOS headers */
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 100vh;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Light Mode Overrides */
+.theme-light {
+  --color-ios-bg: #f2f2f7;
+  --color-ios-card: rgba(255, 255, 255, 0.75);
+  /* More opaque */
+  --color-ios-card-hover: rgba(255, 255, 255, 0.95);
+  --color-ios-border: rgba(0, 0, 0, 0.1);
+  background: #f2f2f7;
+  color: #1c1c1e;
+  /* Dark text for body */
+}
+
+.theme-light .glass-card {
+  background-color: var(--color-ios-card);
+  border-color: var(--color-ios-border);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  /* Darker shadow for contrast */
+}
+
+.theme-light .text-white {
+  color: #1c1c1e;
+}
+
+.theme-light .text-gray-400 {
+  color: #636366;
+}
+
+.theme-light .text-gray-300 {
+  color: #8e8e93;
+}
+
+.theme-light .glass-card h3 {
+  color: #000;
+}
+
+/* Ensure Artist List text is visible in Light Mode */
+.theme-light .glass-card .font-medium {
+  color: #000;
+}
